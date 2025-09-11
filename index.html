@@ -3,10 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Awesome Website</title>
+    <title>JEE College Predictor</title>
+    <style>
+        /* Basic styling for the page */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+        }
+        /* Container to hold the two boxes */
+        .container {
+            display: flex;
+            gap: 20px; /* Space between the boxes */
+        }
+        /* Styling for each predictor box */
+        .predictor-box {
+            width: 300px;
+            padding: 40px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            text-align: center;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        /* Simple hover effect */
+        .predictor-box:hover {
+            transform: scale(1.05);
+        }
+        /* Styling for the title inside the box */
+        h2 {
+            margin-top: 0;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello, World!</h1>
-    <p>My website is coming soon.</p>
+
+    <div class="container">
+        <a href="#" style="text-decoration: none;">
+            <div class="predictor-box">
+                <h2>JEE Advanced College Predictor</h2>
+            </div>
+        </a>
+
+        <a href="#" style="text-decoration: none;">
+            <div class="predictor-box">
+                <h2>JEE Main College Predictor</h2>
+            </div>
+        </a>
+    </div>
+
 </body>
 </html>
