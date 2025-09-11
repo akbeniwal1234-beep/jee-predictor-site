@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JEE Main Predictor</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f0f2f5; margin: 0; padding: 20px; }
+        .container { max-width: 600px; margin: 40px auto; padding: 30px; background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        h1 { text-align: center; color: #1c1e21; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; color: #606770; font-weight: bold; }
+        input, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; background-color: #f5f6f7; }
+        button { width: 100%; padding: 14px; background-color: #1877f2; color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: background-color 0.2s; }
+        button:hover { background-color: #166fe5; }
+        .home-link { display: block; text-align: center; margin-top: 30px; color: #1877f2; text-decoration: none; }
+        .results-heading { margin-top: 40px; border-bottom: 1px solid #ddd; padding-bottom: 10px; }
+        .result-card { background-color: #f9f9f9; border: 1px solid #e9e9e9; border-radius: 8px; padding: 15px; margin-top: 15px; }
+        .result-card h3 { margin: 0 0 10px 0; color: #166fe5; }
+        .result-card p { margin: 5px 0; color: #333; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>JEE Main College Predictor</h1>
+        <form id="predictor-form">
+            <div class="form-group">
+                <label for="rank">Enter Your CRL Rank</label>
+                <input type="number" id="rank" placeholder="Enter your Common Rank List (CRL) Rank" required>
+            </div>
+
+            <div class="form-group">
+                <label for="home-state">Select Your Home State</label>
+                <select id="home-state">
+                    <option value="">-- Select Your State --</option>
+                    <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                    <option value="Andhra Pradesh">Andhra Pradesh</option>
+                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                    <option value="Assam">Assam</option>
+                    <option value="Bihar">Bihar</option>
+                    <option value="Chandigarh">Chandigarh</option>
+                    <option value="Chhattisgarh">Chhattisgarh</option>
+                    <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
+                    <option value="Delhi">Delhi</option>
+                    <option value="Goa">Goa</option>
+                    <option value="Gujarat">Gujarat</option>
+                    <option value="Haryana">Haryana</option>
+                    <option value="Himachal Pradesh">Himachal Pradesh</option>
+                    <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                    <option value="Jharkhand">Jharkhand</option>
+                    <option value="Karnataka">Karnataka</option>
+                    <option value="Kerala">Kerala</option>
+                    <option value="Ladakh">Ladakh</option>
+                    <option value="Lakshadweep">Lakshadweep</option>
+                    <option value="Madhya Pradesh">Madhya Pradesh</option>
+                    <option value="Maharashtra">Maharashtra</option>
+                    <option value="Manipur">Manipur</option>
+                    <option value="Meghalaya">Meghalaya</option>
+                    <option value="Mizoram">Mizoram</option>
+                    <option value="Nagaland">Nagaland</option>
+                    <option value="Odisha">Odisha</option>
+                    <option value="Puducherry">Puducherry</option>
+                    <option value="Punjab">Punjab</option>
+                    <option value="Rajasthan">Rajasthan</option>
+                    <option value="Sikkim">Sikkim</option>
+                    <option value="Tamil Nadu">Tamil Nadu</option>
+                    <option value="Telangana">Telangana</option>
+                    <option value="Tripura">Tripura</option>
+                    <option value="Uttar Pradesh">Uttar Pradesh</option>
+                    <option value="Uttarakhand">Uttarakhand</option>
+                    <option value="West Bengal">West Bengal</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Select Your Category</label>
+                <select id="category">
+                    <option value="OPEN">OPEN</option>
+                    <option value="EWS">EWS</option>
+                    <option value="OBC-NCL">OBC-NCL</option>
+                    <option value="SC">SC</option>
+                    <option value="ST">ST</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="seat-type">Select Seat Pool</label>
+                <select id="seat-type">
+                    <option value="Gender-Neutral">Gender-Neutral</option>
+                    <option value="Female-Only">Female-Only</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="pwd-status">Are you a PwD Candidate?</label>
+                <select id="pwd-status">
+                    <option value="no">No</option>
+                    <option value="yes">Yes</option>
+                </select>
+            </div>
+            <button type="submit">Predict My Colleges</button>
+        </form>
+        <div id="results-container"></div>
+    </div>
+    <a href="index.html" class="home-link">← Back to Home</a>
+
+    <script>
+        async function runPrediction(event) {
+            event.preventDefault();
+
+            const userRank = parseInt(document.getElementById('rank').value);
+            const userHomeState = document.getElementById('home-state').value;
+            const userCategory = document.getElementById('category').value;
+            const userGender = document.getElementById('seat-type').value;
+            const isPwd = document.getElementById('pwd-status').value === 'yes';
+            const resultsContainer = document.getElementById('results-container');
+            resultsContainer.innerHTML = '';
+
+            if (isNaN(userRank) || userHomeState === "") {
+                resultsContainer.innerHTML = `<p style="color: red; text-align: center;">Please enter a valid rank and select your home state.</p>`;
+                return;
+            }
+
+            resultsContainer.innerHTML = '<p style="text-align: center;">Searching for colleges...</p>';
+
+            try {
+                const response = await fetch('jee-main-data.json');
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                const collegeData = await response.json();
+
+                const filteredColleges = collegeData.filter(college => {
+                    const closingRank = parseInt(college["Closing Rank"]);
+                    if (isNaN(closingRank)) return false; 
+                    
+                    const rankMatches = userRank <= closingRank;
+                    const genderMatches = userGender === college.Gender;
+
+                    // ADVANCED QUOTA LOGIC
+                    let quotaMatches = false;
+                    const isIIIT = college.Institute.includes("Indian Institute of Information Technology");
+
+                    if (isIIIT) {
+                        // For IIITs, only match "All India" quota
+                        quotaMatches = college.Quota === 'All India';
+                    } else {
+                        // For NITs and other institutes, use the smart state logic
+                        const collegeQuota = college.Quota;
+                        const collegeState = college.State;
+
+                        if (collegeQuota === 'All India') {
+                            quotaMatches = true;
+                        } else if (collegeQuota === 'Home State') {
+                            quotaMatches = userHomeState === collegeState;
+                        } else if (collegeQuota === 'Other State') {
+                            quotaMatches = userHomeState !== collegeState;
+                        }
+                    }
+
+                    // PwD LOGIC
+                    let categoryMatches = false;
+                    const dataCategory = college["Seat Type"];
+
+                    if (isPwd) {
+                        categoryMatches = dataCategory === `${userCategory} (PwD)`;
+                    } else {
+                        categoryMatches = dataCategory === userCategory;
+                    }
+
+                    return rankMatches && categoryMatches && quotaMatches && genderMatches;
+                });
+                
+                displayResults(filteredColleges, userRank);
+
+            } catch (error) {
+                console.error('Error fetching or processing data:', error);
+                resultsContainer.innerHTML = '<p style="color: red; text-align: center;">Could not load college data. Please ensure jee-main-data.json is correct.</p>';
+            }
+        }
+
+        function displayResults(colleges, userRank) {
+            const resultsContainer = document.getElementById('results-container');
+            resultsContainer.innerHTML = '';
+
+            if (colleges.length === 0) {
+                resultsContainer.innerHTML = '<h2 class="results-heading">No colleges found matching your criteria.</h2>';
+                return;
+            }
+
+            resultsContainer.innerHTML = `<h2 class="results-heading">Found ${colleges.length} potential options for rank ${userRank}:</h2>`;
+
+            colleges.sort((a, b) => parseInt(a["Closing Rank"]) - parseInt(b["Closing Rank"])).forEach(college => {
+                const collegeCard = `
+                    <div class="result-card">
+                        <h3>${college.Institute}</h3>
+                        <p><strong>Branch:</strong> ${college["Academic Program Name"]}</p>
+                        <p><strong>Matched Quota:</strong> ${college.Quota}</p>
+                        <p><strong>Seat Type:</strong> ${college["Seat Type"]}</p>
+                        <p><strong>Closing Rank:</strong> ${college["Closing Rank"]}</p>
+                    </div>
+                `;
+                resultsContainer.innerHTML += collegeCard;
+            });
+        }
+
+        const form = document.getElementById('predictor-form');
+        form.addEventListener('submit', runPrediction);
+    </script>
+</body>
+</html>
+
