@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JEE College Predictor</title>
     <style>
-        /* Basic styling for the page */
         body {
-            font-family: Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -15,44 +14,59 @@
             margin: 0;
             background-color: #f0f2f5;
         }
-        /* Container to hold the two boxes */
         .container {
             display: flex;
-            gap: 20px; /* Space between the boxes */
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            /* This tells the container to stretch its children to be the same height */
+            align-items: stretch;
         }
-        /* Styling for each predictor box */
         .predictor-box {
-            width: 300px;
+            width: 320px;
             padding: 40px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
             text-align: center;
             background-color: #ffffff;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: all 0.3s ease;
+            
+            /* These new properties use flexbox to perfectly center the text */
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        /* Simple hover effect */
+        /* This is the "pop" effect on hover */
         .predictor-box:hover {
-            transform: scale(1.05);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.12);
         }
-        /* Styling for the title inside the box */
-        h2 {
-            margin-top: 0;
-            color: #333;
+        .predictor-box h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #1c1e21;
+        }
+        a {
+            text-decoration: none;
+            /* This makes the link tag expand, ensuring the boxes can stretch */
+            display: flex;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <a href="#" style="text-decoration: none;">
+        <!-- CORRECT LINK for JEE Advanced -->
+        <a href="jee-advanced.html">
             <div class="predictor-box">
                 <h2>JEE Advanced College Predictor</h2>
             </div>
         </a>
 
-        <a href="#" style="text-decoration: none;">
+        <!-- Placeholder link for JEE Main for now -->
+        <a href="#">
             <div class="predictor-box">
                 <h2>JEE Main College Predictor</h2>
             </div>
@@ -61,3 +75,4 @@
 
 </body>
 </html>
+
