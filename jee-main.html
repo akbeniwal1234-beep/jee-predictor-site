@@ -32,7 +32,7 @@
             <div class="form-group">
                 <label for="home-state">Select Your Home State</label>
                 <select id="home-state">
-                    <option value="">-- Select Your State --</option>
+                    <option value="">-- Select State --</option>
                     <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
                     <option value="Andhra Pradesh">Andhra Pradesh</option>
                     <option value="Arunachal Pradesh">Arunachal Pradesh</option>
@@ -71,7 +71,7 @@
                     <option value="West Bengal">West Bengal</option>
                 </select>
             </div>
-
+            
             <div class="form-group">
                 <label for="category">Select Your Category</label>
                 <select id="category">
@@ -90,6 +90,7 @@
                     <option value="Female-Only">Female-Only</option>
                 </select>
             </div>
+            
             <div class="form-group">
                 <label for="pwd-status">Are you a PwD Candidate?</label>
                 <select id="pwd-status">
@@ -97,6 +98,7 @@
                     <option value="yes">Yes</option>
                 </select>
             </div>
+            
             <button type="submit">Predict My Colleges</button>
         </form>
         <div id="results-container"></div>
@@ -115,8 +117,12 @@
             const resultsContainer = document.getElementById('results-container');
             resultsContainer.innerHTML = '';
 
-            if (isNaN(userRank) || userHomeState === "") {
-                resultsContainer.innerHTML = `<p style="color: red; text-align: center;">Please enter a valid rank and select your home state.</p>`;
+            if (isNaN(userRank)) {
+                resultsContainer.innerHTML = `<p style="color: red; text-align: center;">Please enter a valid rank.</p>`;
+                return;
+            }
+            if (userHomeState === "") {
+                resultsContainer.innerHTML = `<p style="color: red; text-align: center;">Please select your Home State.</p>`;
                 return;
             }
 
@@ -134,35 +140,28 @@
                     const rankMatches = userRank <= closingRank;
                     const genderMatches = userGender === college.Gender;
 
-                    // ADVANCED QUOTA LOGIC
-                    let quotaMatches = false;
-                    const isIIIT = college.Institute.includes("Indian Institute of Information Technology");
-
-                    if (isIIIT) {
-                        // For IIITs, only match "All India" quota
-                        quotaMatches = college.Quota === 'All India';
-                    } else {
-                        // For NITs and other institutes, use the smart state logic
-                        const collegeQuota = college.Quota;
-                        const collegeState = college.State;
-
-                        if (collegeQuota === 'All India') {
-                            quotaMatches = true;
-                        } else if (collegeQuota === 'Home State') {
-                            quotaMatches = userHomeState === collegeState;
-                        } else if (collegeQuota === 'Other State') {
-                            quotaMatches = userHomeState !== collegeState;
-                        }
-                    }
-
-                    // PwD LOGIC
                     let categoryMatches = false;
                     const dataCategory = college["Seat Type"];
-
                     if (isPwd) {
                         categoryMatches = dataCategory === `${userCategory} (PwD)`;
                     } else {
                         categoryMatches = dataCategory === userCategory;
+                    }
+
+                    // FINAL CORRECTED QUOTA LOGIC
+                    let quotaMatches = false;
+                    const isIIIT = college.Institute.toLowerCase().includes('indian institute of information technology');
+                    
+                    if (isIIIT) {
+                        quotaMatches = college.Quota === 'All India';
+                    } else { // For NITs and other institutes
+                        if (userHomeState === college.State && college.Quota === 'Home State') {
+                            quotaMatches = true;
+                        } else if (userHomeState !== college.State && college.Quota === 'Other State') {
+                            quotaMatches = true;
+                        } else if (college.Quota === 'All India') { // THIS WAS THE MISSING PIECE
+                            quotaMatches = true;
+                        }
                     }
 
                     return rankMatches && categoryMatches && quotaMatches && genderMatches;
