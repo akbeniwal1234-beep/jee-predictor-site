@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JEE College Predictor</title>
+    
+    <!-- SEO Tags: Title and Description -->
+    <title>Free JEE Main & Advanced College Predictor 2025</title>
+    <meta name="description" content="A free and accurate college predictor for JEE Main and JEE Advanced. Enter your rank and category to see a list of potential IITs, NITs, and IIITs.">
+    
+    <meta name="google-site-verification" content="DXWAoLaEyhqsWanDJNIRBwPgnyNAALM9nca2w_dmP3s" />
+    
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -19,7 +25,6 @@
             flex-wrap: wrap;
             justify-content: center;
             gap: 30px;
-            /* This tells the container to stretch its children to be the same height */
             align-items: stretch;
         }
         .predictor-box {
@@ -32,13 +37,10 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.08);
             cursor: pointer;
             transition: all 0.3s ease;
-            
-            /* These new properties use flexbox to perfectly center the text */
             display: flex;
             justify-content: center;
             align-items: center;
         }
-        /* This is the "pop" effect on hover */
         .predictor-box:hover {
             transform: translateY(-5px) scale(1.05);
             box-shadow: 0 8px 16px rgba(0,0,0,0.12);
@@ -50,7 +52,6 @@
         }
         a {
             text-decoration: none;
-            /* This makes the link tag expand, ensuring the boxes can stretch */
             display: flex;
         }
     </style>
@@ -58,14 +59,11 @@
 <body>
 
     <div class="container">
-        <!-- CORRECT LINK for JEE Advanced -->
         <a href="jee-advanced.html">
             <div class="predictor-box">
                 <h2>JEE Advanced College Predictor</h2>
             </div>
         </a>
-
-        <!-- Placeholder link for JEE Main for now -->
         <a href="jee-main.html">
             <div class="predictor-box">
                 <h2>JEE Main College Predictor</h2>
