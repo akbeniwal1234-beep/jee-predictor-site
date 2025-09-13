@@ -3,70 +3,282 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     
-    <!-- SEO Tags: Title and Description -->
-    <title>JEE Main & Advanced College Predictor 2025</title>
+    <title>Free JEE Main & Advanced College Predictor 2025</title>
     <meta name="description" content="A free and accurate college predictor for JEE Main and JEE Advanced. Enter your rank and category to see a list of potential IITs, NITs, and IIITs.">
+    <!-- PASTE YOUR GOOGLE VERIFICATION TAG ON THE NEXT LINE -->
     
     <style>
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
-            background-color: #f0f2f5;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
         }
-        .container {
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 5vh 20px;
+            box-sizing: border-box;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #1c3d5a;
+            margin: 0;
+        }
+        .options-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 30px;
-            align-items: stretch;
+            margin-bottom: 60px; /* Space between predictor boxes and new section */
         }
         .predictor-box {
-            width: 320px;
-            padding: 40px;
-            border: 1px solid #ddd;
+            width: 250px;
+            padding: 25px;
             border-radius: 12px;
             text-align: center;
             background-color: #ffffff;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
             cursor: pointer;
             transition: all 0.3s ease;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            border-top: 4px solid transparent;
         }
         .predictor-box:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
         }
+        .predictor-box.advanced { border-color: #ff8c00; }
+        .predictor-box.main { border-color: #1e90ff; }
+
         .predictor-box h2 {
             margin: 0;
             font-size: 1.5rem;
-            color: #1c1e21;
+            color: #1c3d5a;
+            font-weight: 600;
         }
         a {
             text-decoration: none;
+        }
+
+        /* New section for "College wise cutoff" */
+        .info-header {
+            text-align: center;
+            width: 100%;
+            margin-bottom: 40px;
+        }
+        .info-header h2 {
+            font-size: 1.8rem;
+            color: #1c3d5a;
+            font-weight: 600;
+            margin: 0;
+            padding-bottom: 10px;
+            display: inline-block;
+            border-bottom: 3px solid #1e90ff;
+        }
+
+        /* Styles for the college lists */
+        .lists-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            width: 100%;
+            max-width: 1200px;
+        }
+        .college-list {
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            height: 400px; /* Fixed height for the lists */
             display: flex;
+            flex-direction: column;
+        }
+        .college-list h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #1c3d5a;
+            margin-top: 0;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .college-list ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            overflow-y: auto; /* Adds a scrollbar if content overflows */
+            flex-grow: 1;
+        }
+        .college-list li {
+            padding: 8px 5px; /* Added horizontal padding */
+            color: #5a7184;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .college-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* Custom scrollbar styles */
+        .college-list ul::-webkit-scrollbar {
+            width: 8px;
+        }
+        .college-list ul::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .college-list ul::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        .college-list ul::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Responsive layout for smaller screens */
+        @media (max-width: 900px) {
+            .lists-container {
+                grid-template-columns: 1fr;
+            }
+            .college-list {
+                height: auto; /* Auto height on mobile */
+                max-height: 400px; /* Still have a max height with scroll */
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <a href="jee-advanced.html">
-            <div class="predictor-box">
-                <h2>JEE Advanced College Predictor</h2>
+    <div class="main-container">
+        <header>
+            <h1>JEE College Predictor</h1>
+        </header>
+
+        <div class="options-container">
+            <a href="jee-advanced.html">
+                <div class="predictor-box advanced">
+                    <h2>JEE Advanced</h2>
+                </div>
+            </a>
+            <a href="jee-main.html">
+                <div class="predictor-box main">
+                    <h2>JEE Main</h2>
+                </div>
+            </a>
+        </div>
+
+        <!-- NEW SECTION ADDED HERE -->
+        <div class="info-header">
+            <h2>College-Wise Cutoffs</h2>
+        </div>
+        
+        <div class="lists-container">
+            <div class="college-list">
+                <h3>IITs (All 23)</h3>
+                <ul>
+                    <li>IIT Bombay</li>
+                    <li>IIT Delhi</li>
+                    <li>IIT Madras</li>
+                    <li>IIT Kanpur</li>
+                    <li>IIT Kharagpur</li>
+                    <li>IIT Roorkee</li>
+                    <li>IIT Guwahati</li>
+                    <li>IIT (BHU) Varanasi</li>
+                    <li>IIT (ISM) Dhanbad</li>
+                    <li>IIT Hyderabad</li>
+                    <li>IIT Indore</li>
+                    <li>IIT Gandhinagar</li>
+                    <li>IIT Patna</li>
+                    <li>IIT Jodhpur</li>
+                    <li>IIT Ropar</li>
+                    <li>IIT Bhubaneswar</li>
+                    <li>IIT Mandi</li>
+                    <li>IIT Palakkad</li>
+                    <li>IIT Tirupati</li>
+                    <li>IIT Bhilai</li>
+                    <li>IIT Goa</li>
+                    <li>IIT Jammu</li>
+                    <li>IIT Dharwad</li>
+                </ul>
             </div>
-        </a>
-        <a href="jee-main.html">
-            <div class="predictor-box">
-                <h2>JEE Main College Predictor</h2>
+            <div class="college-list">
+                <h3>NITs (All 31)</h3>
+                <ul>
+                    <li>NIT Tiruchirappalli (Trichy)</li>
+                    <li>NIT Surathkal (NITK)</li>
+                    <li>NIT Warangal</li>
+                    <li>NIT Rourkela</li>
+                    <li>NIT Calicut</li>
+                    <li>NIT Jaipur (MNIT)</li>
+                    <li>NIT Silchar</li>
+                    <li>NIT Nagpur (VNIT)</li>
+                    <li>NIT Durgapur</li>
+                    <li>NIT Jalandhar (Dr. B R Ambedkar)</li>
+                    <li>NIT Allahabad (MNNIT)</li>
+                    <li>NIT Kurukshetra</li>
+                    <li>NIT Patna</li>
+                    <li>NIT Surat (SVNIT)</li>
+                    <li>NIT Delhi</li>
+                    <li>NIT Bhopal (MANIT)</li>
+                    <li>NIT Agartala</li>
+                    <li>NIT Meghalaya</li>
+                    <li>NIT Goa</li>
+                    <li>NIT Jamshedpur</li>
+                    <li>NIT Hamirpur</li>
+                    <li>NIT Puducherry</li>
+                    <li>NIT Manipur</li>
+                    <li>NIT Andhra Pradesh</li>
+                    <li>NIT Srinagar</li>
+                    <li>NIT Raipur</li>
+                    <li>NIT Uttarakhand</li>
+                    <li>NIT Sikkim</li>
+                    <li>NIT Arunachal Pradesh</li>
+                    <li>NIT Mizoram</li>
+                    <li>NIT Nagaland</li>
+                </ul>
             </div>
-        </a>
+            <div class="college-list">
+                <h3>IIITs (All 26)</h3>
+                <ul>
+                    <li>IIIT Allahabad</li>
+                    <li>IIIT Gwalior</li>
+                    <li>IIIT Jabalpur</li>
+                    <li>IIIT Kancheepuram</li>
+                    <li>IIIT Kurnool</li>
+                    <li>IIIT Agartala</li>
+                    <li>IIIT Bhagalpur</li>
+                    <li>IIIT Bhopal</li>
+                    <li>IIIT Dharwad</li>
+                    <li>IIIT Guwahati</li>
+                    <li>IIIT Kalyani</li>
+                    <li>IIIT Kota</li>
+                    <li>IIIT Kottayam</li>
+                    <li>IIIT Lucknow</li>
+                    <li>IIIT Manipur</li>
+                    <li>IIIT Nagpur</li>
+                    <li>IIIT Pune</li>
+                    <li>IIIT Raichur</li>
+                    <li>IIIT Ranchi</li>
+                    <li>IIIT Sonepat</li>
+                    <li>IIIT Sri City</li>
+                    <li>IIIT Surat</li>
+                    <li>IIIT Tiruchirappalli</li>
+                    <li>IIIT Una</li>
+                    <li>IIIT Vadodara</li>
+                    <li>IIIT Kottayam Campus Diu</li>
+                </ul>
+            </div>
+        </div>
+
     </div>
 
 </body>
